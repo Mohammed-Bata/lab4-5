@@ -1,0 +1,129 @@
+<body>
+  <div class="wrapper">
+    <div class="title">Register Form</div>
+    <form action="#" [formGroup]="formWithControls" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <input
+          type="text"
+          required
+          formControlName="fullname"
+          class="form-control"
+          [class.is-invalid]="
+            formWithControls.get('fullname')?.invalid && formWithControls.get('fullname')?.touched
+          "
+          [class.is-valid]="
+            formWithControls.get('fullname')?.valid && formWithControls.get('fullname')?.touched
+          "
+        />
+        <label>Full Name</label>
+
+        @if(formWithControls.get('fullname')?.errors?.['required']){
+        <div class="invalid-feedback">name is required</div>
+        }@else if(formWithControls.get('fullname')?.errors?.['minlength']){
+        <div class="invalid-feedback">it is too short</div>
+        }
+      </div>
+      <div class="field">
+        <input
+          type="text"
+          required
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="
+            formWithControls.get('email')?.invalid && formWithControls.get('email')?.touched
+          "
+          [class.is-valid]="
+            formWithControls.get('email')?.valid && formWithControls.get('email')?.touched
+          "
+        />
+        <label>Email Address</label>
+
+        @if(formWithControls.get('email')?.errors?.['required']){
+        <div class="invalid-feedback">email is required</div>
+        }@else if(formWithControls.get('email')?.errors?.['email']){
+        <div class="invalid-feedback">it isnot valid email</div>
+        }
+      </div>
+      <div class="field">
+        <input
+          type="string"
+          required
+          formControlName="number"
+          class="form-control"
+          [class.is-invalid]="
+            formWithControls.get('number')?.invalid && formWithControls.get('number')?.touched
+          "
+          [class.is-valid]="
+            formWithControls.get('number')?.valid && formWithControls.get('number')?.touched
+          "
+        />
+        <label>Mobile Number</label>
+
+        @if(formWithControls.get('number')?.errors?.['required']){
+        <div class="invalid-feedback">number is required</div>
+        }@else if(formWithControls.get('number')?.errors?.['pattern']){
+        <div class="invalid-feedback">it is not valid number</div>
+        }
+      </div>
+      <div class="field">
+        <input
+          type="password"
+          required
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="
+            formWithControls.get('password')?.invalid && formWithControls.get('password')?.touched
+          "
+          [class.is-valid]="
+            formWithControls.get('password')?.valid && formWithControls.get('password')?.touched
+          "
+        />
+        <label>Password</label>
+
+        @if(formWithControls.get('password')?.errors?.['required']){
+        <div class="invalid-feedback">password is required</div>
+        }@else if(formWithControls.get('password')?.errors?.['minlength']){
+        <div class="invalid-feedback">it is too short password</div>
+        }
+      </div>
+      <div class="field">
+        <input
+          type="password"
+          required
+          formControlName="confirmpassword"
+          class="form-control"
+          [class.is-invalid]="
+            (formWithControls.get('confirmpassword')?.invalid &&
+              formWithControls.get('confirmpassword')?.touched) ||
+            formWithControls.hasError('mismatch')
+          "
+          [class.is-valid]="
+            formWithControls.get('confirmpassword')?.valid &&
+            formWithControls.get('confirmpassword')?.touched
+          "
+        />
+        <label>Confirm Password</label>
+
+        @if(formWithControls.get('confirmpassword')?.errors?.['required']){
+        <div class="invalid-feedback mb-4">confirm password is required</div>
+        }@else if(formWithControls.hasError('mismatch')){
+        <div class="invalid-feedback">passwords must be identical</div>
+        }
+      </div>
+      <div class="field">
+        <input type="submit" value="SignUp" [disabled]="formWithControls.invalid" />
+      </div>
+      <div class="field">
+        <input type="reset" value="Reset" />
+      </div>
+    </form>
+    @if (submittedData) {
+    <div class="card mt-4 p-3">
+      <h5>Registered User</h5>
+      <p><b>Name:</b> {{ submittedData.fullname }}</p>
+      <p><b>Email:</b> {{ submittedData.email }}</p>
+      <p><b>Number:</b> {{ submittedData.number }}</p>
+    </div>
+    }
+  </div>
+</body>

@@ -1,0 +1,63 @@
+<body>
+  <div class="wrapper">
+    <div class="title">Login Form</div>
+    <form action="#" [formGroup]="formWithControls" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <input
+          type="text"
+          required
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="
+            formWithControls.get('email')?.invalid && formWithControls.get('email')?.touched
+          "
+          [class.is-valid]="
+            formWithControls.get('email')?.valid && formWithControls.get('email')?.touched
+          "
+        />
+        <label>Email Address</label>
+
+        @if(formWithControls.get('email')?.errors?.['required']){
+        <div class="invalid-feedback">email is required</div>
+        }@else if(formWithControls.get('email')?.errors?.['email']){
+        <div class="invalid-feedback">it isnot valid email</div>
+        }
+      </div>
+      <div class="field">
+        <input
+          type="password"
+          required
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="
+            formWithControls.get('password')?.invalid && formWithControls.get('password')?.touched
+          "
+          [class.is-valid]="
+            formWithControls.get('password')?.valid && formWithControls.get('password')?.touched
+          "
+        />
+        <label>Password</label>
+
+        @if(formWithControls.get('password')?.errors?.['required']){
+        <div class="invalid-feedback">password is required</div>
+        }@else if(formWithControls.get('password')?.errors?.['minlength']){
+        <div class="invalid-feedback">it is too short</div>
+        }
+      </div>
+      <div class="field">
+        <input type="submit" value="Login" [disabled]="formWithControls.invalid" />
+      </div>
+      <div class="field">
+        <input type="reset" value="Reset" />
+      </div>
+      <div class="signup-link">Not a member? <a routerLink="/register">Signup now</a></div>
+    </form>
+
+    @if (submittedData) {
+    <div class="card mt-4 p-3">
+      <h5>User</h5>
+      <p><b>Email:</b> {{ submittedData.email }}</p>
+    </div>
+    }
+  </div>
+</body>

@@ -1,0 +1,31 @@
+<div class="container d-flex">
+  @for(item of cartItems; track item.id){
+  <div class="container border-light">
+    <div class="product-card">
+      <h2>{{ item.name }}</h2>
+      <img src="{{ item.img }}" />
+      <p>Price: {{ item.price }}</p>
+      <p>Quantity: {{ item.quantity }}</p>
+      <button class="btn btn-secondary ms-2" (click)="Details(item.id)">Details</button>
+    </div>
+  </div>
+  }
+</div>
+<div>
+  @if(showDetails){
+  <app-product-detail [product]="selectedProduct" (close)="closeDetails()" />
+  }
+</div>
+
+@if(cartItems.length !==0){
+
+<div class="text-center text-danger mb-4 mt-4">
+  <button class="btn btn-danger" (click)="clear()">Clear</button>
+</div>
+
+}@else{
+<div class="container col-10 text-center">
+  <h2>empty cart</h2>
+  <img class="img-fluid w-50" src="assets/cart.png" />
+</div>
+}
