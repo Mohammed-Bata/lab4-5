@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
   FormControl,
@@ -9,7 +10,7 @@ import {
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })

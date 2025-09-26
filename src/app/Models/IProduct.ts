@@ -1,9 +1,8 @@
 export interface IProduct {
   id: number;
-  name: string;
-  quantity: number;
+  title: string;
   price: number;
-  date: Date;
-  img: string;
-  categoryId: number;
+  stock: number;
+  category: string;
+  thumbnail: string;
 }

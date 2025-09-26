@@ -16,7 +16,7 @@ import { ShoppingCartComponent } from '../shopping-cart/shopping-cart';
     FormsModule,
     CardBorder,
     CurrencyPipe,
-    DatePipe,
+
     // ProductDetailComponent,
     // ShoppingCartComponent,
   ],
@@ -26,7 +26,7 @@ import { ShoppingCartComponent } from '../shopping-cart/shopping-cart';
 export class ProductsComponent {
   constructor(private productService: ProductsService) {}
   searchName: string = '1';
-  categoryId: number = 0;
+  categoryName: string = ' ';
   showDetails = false;
   productsList: IProduct[] = [];
   //filteredProducts: IProduct[] = [];
@@ -40,29 +40,28 @@ export class ProductsComponent {
   cartItems!: ICartItem[];
 
   ngOnInit(): void {
-    this.productsList = this.productService.getAllProducts();
-    //this.filteredProducts = this.productsList;
+    this.productService.getAllProducts().subscribe({
+      next: (data: any) => {
+        this.productsList = data.products;
+      },
+      error: (err) => {
+        console.error('Error loading products, ', err);
+      },
+    });
   }
 
-  // Details(product: IProduct) {
-  //   this.showDetails = true;
-  //   this.selectedProduct = product;
-  // }
-  // closeDetails() {
-  //   this.showDetails = false;
-  // }
-  buy(id: number) {
-    const product = this.productService.getProductById(id);
+  buy(product: IProduct) {
+    // const product = this.productService.getProductById(id);
 
-    if (product && product.quantity > 0) {
-      product.quantity -= 2;
+    if (product && product.stock > 0) {
+      product.stock -= 2;
 
       const item = {
         id: product.id,
-        name: product.name,
+        name: product.title,
         quantity: 2,
         price: product.price,
-        img: product.img,
+        img: product.thumbnail,
       };
 
       // this.cartItem.id = product.id;
@@ -81,14 +80,21 @@ export class ProductsComponent {
   //   console.log(this.cartItems);
   // }
 
-  search() {
-    console.log('before1');
-    this.productsList = this.productService.getProductsByName(this.searchName);
-    console.log(this.productsList[0]);
-  }
+  // search() {
+  //   console.log('before1');
+  //   this.productsList = this.productService.getProductsByName(this.searchName);
+  //   console.log(this.productsList[0]);
+  // }
   filterProducts() {
-    if (this.categoryId != 0) {
-      this.productsList = this.productService.getProductsByCatId(+this.categoryId);
+    if (this.categoryName != ' ') {
+      this.productService.getProductsByCatId(this.categoryName).subscribe({
+        next: (data) => {
+          this.productsList = data;
+        },
+        error: (err) => {
+          console.error('Error loading products, ', err);
+        },
+      });
     }
   }
 }

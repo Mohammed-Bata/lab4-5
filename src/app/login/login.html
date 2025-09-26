@@ -5,6 +5,26 @@
       <div class="field">
         <input
           type="text"
+          id="username"
+          required
+          formControlName="username"
+          class="form-control"
+          [class.is-invalid]="
+            formWithControls.get('username')?.invalid && formWithControls.get('username')?.touched
+          "
+          [class.is-valid]="
+            formWithControls.get('username')?.valid && formWithControls.get('username')?.touched
+          "
+        />
+        <label>User Name</label>
+
+        @if(formWithControls.get('username')?.errors?.['required']){
+        <div class="invalid-feedback">username is required</div>
+        }
+      </div>
+      <div class="field">
+        <input
+          type="text"
           required
           formControlName="email"
           class="form-control"
@@ -56,6 +76,7 @@
     @if (submittedData) {
     <div class="card mt-4 p-3">
       <h5>User</h5>
+      <p><b>Username:</b> {{ submittedData.username }}</p>
       <p><b>Email:</b> {{ submittedData.email }}</p>
     </div>
     }

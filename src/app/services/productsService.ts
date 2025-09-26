@@ -1,51 +1,17 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../Models/IProduct';
 import { ICartItem } from '../Models/ICartItem';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { apiUrls } from '../Constants/apiUrls';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  productsList: IProduct[] = [
-    {
-      id: 1,
-      name: 'Product 1',
-      quantity: 7,
-      price: 100,
-      date: new Date(),
-      img: './assets/download.jpg',
-      categoryId: 1,
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      quantity: 12,
-      price: 80,
-      date: new Date(),
-      img: './assets/download.jpg',
-      categoryId: 2,
-    },
-    {
-      id: 3,
-      name: 'Product 3',
-      quantity: 10,
-      price: 90,
-      date: new Date(),
-      img: './assets/download.jpg',
-      categoryId: 2,
-    },
-  ];
+  constructor(private httpClient: HttpClient) {}
 
   cartItems: ICartItem[] = [];
-
-  // constructor() {
-  //   const savedCart = localStorage.getItem('cartItems');
-  //   this.cartItems = savedCart ? JSON.parse(savedCart) : [];
-  // }
-
-  // private saveCart() {
-  //   localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-  // }
 
   addToCart(product: ICartItem) {
     const existingProduct = this.cartItems.find((p) => p.id === product.id);
@@ -64,20 +30,20 @@ export class ProductsService {
     //this.saveCart();
   }
 
-  getProductsByCatId(catId: number): IProduct[] {
-    return this.productsList.filter((product) => product.categoryId === catId);
+  getProductsByCatId(category: string): Observable<IProduct[]> {
+    return this.httpClient.get<IProduct[]>(`${apiUrls.getCategoriesProducts}/${category}`);
   }
-  getProductById(id: number): IProduct | undefined {
-    return this.productsList.find((product) => product.id === id);
+  getProductById(id: number): Observable<IProduct> {
+    return this.httpClient.get<IProduct>(`${apiUrls.getProduct}/${id}`);
   }
-  getAllProducts() {
-    return this.productsList;
+  getAllProducts(): Observable<IProduct[]> {
+    return this.httpClient.get<IProduct[]>(apiUrls.getAllProducts);
   }
-  filtered!: IProduct[];
-  getProductsByName(name: string) {
-    console.log('before');
-    return (this.filtered = this.productsList.filter((p) =>
-      p.name.toLowerCase().includes(name.toLowerCase())
-    ));
-  }
+  // filtered!: IProduct[];
+  // getProductsByName(name: string) {
+  //   console.log('before');
+  //   return (this.filtered = this.productsList.filter((p) =>
+  //     p.name.toLowerCase().includes(name.toLowerCase())
+  //   ));
+  // }
 }

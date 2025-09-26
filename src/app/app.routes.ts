@@ -7,6 +7,8 @@ import { ContactusComponent } from './contactus/contactus';
 import { NotFoundComponent } from './notfount/notfound';
 import { Login } from './login/login';
 import { Register } from './register/register';
+import { authGuard } from './Guards/authGuard';
+import { navbarGuard } from './Guards/navbarGuard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,6 +22,7 @@ export const routes: Routes = [
     path: 'products',
     component: ProductsComponent,
     title: 'Products Page',
+    canActivate: [authGuard],
   },
   {
     path: 'aboutus',
@@ -40,11 +43,13 @@ export const routes: Routes = [
     path: 'login',
     component: Login,
     title: 'Login Page',
+    canActivate: [navbarGuard],
   },
   {
     path: 'register',
     component: Register,
     title: 'Register Page',
+    canActivate: [navbarGuard],
   },
   {
     path: '**',

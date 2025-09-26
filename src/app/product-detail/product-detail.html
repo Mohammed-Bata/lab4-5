@@ -1,8 +1,9 @@
 <div class="container border-light">
   <div class="product-card">
-    <h2>{{ product?.name }}</h2>
+    <h2>{{ product?.title }}</h2>
     <p>Price: {{ product?.price }}</p>
-    <p>Quantity: {{ product?.quantity }}</p>
+    <p>Quantity: {{ product?.stock }}</p>
+
     <button class="btn btn-secondary" (click)="onCloseDetails()">Close Details</button>
   </div>
 </div>

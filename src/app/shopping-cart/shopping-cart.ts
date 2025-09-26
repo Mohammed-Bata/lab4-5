@@ -33,7 +33,11 @@ export class ShoppingCartComponent {
   id!: number;
   Details(id: number) {
     this.showDetails = true;
-    this.selectedProduct = this.productsService.getProductById(id);
+    this.productsService.getProductById(id).subscribe({
+      next: (data) => {
+        this.selectedProduct = data;
+      },
+    });
   }
   closeDetails() {
     this.showDetails = false;
