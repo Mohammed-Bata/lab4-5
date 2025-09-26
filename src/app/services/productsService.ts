@@ -38,15 +38,6 @@ export class ProductsService {
 
   cartItems: ICartItem[] = [];
 
-  // constructor() {
-  //   const savedCart = localStorage.getItem('cartItems');
-  //   this.cartItems = savedCart ? JSON.parse(savedCart) : [];
-  // }
-
-  // private saveCart() {
-  //   localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
-  // }
-
   addToCart(product: ICartItem) {
     const existingProduct = this.cartItems.find((p) => p.id === product.id);
     if (!existingProduct) {
